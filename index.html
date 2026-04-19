@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio — Premium Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #080808;
+  --bg2:       #0c0c0c;
+  --white:     #ffffff;
+  --muted:     rgba(255,255,255,0.42);
+  --border:    rgba(255,255,255,0.08);
+  --green:     #6dbd80;
+  --green-dim: rgba(109,189,128,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 99px; }
+
+img { display: block; width: 100%; }
+a  { text-decoration: none; color: inherit; }
+
+/* ════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ════════════════════════════════════════
+   UTILITIES
+════════════════════════════════════════ */
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 48px;
+}
+@media (max-width: 768px) { .container { padding-inline: 24px; } }
+
+.label {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ════════════════════════════════════════
+   1 — NAVBAR
+════════════════════════════════════════ */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  padding: 30px 48px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; 
+  align-items: center;
+  transition: all 0.4s ease;
+}
+#navbar.scrolled {
+  padding: 18px 48px;
+  background: rgba(8,8,8,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 22px; 
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.nav-links-wrapper {
+  justify-self: center; 
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  background: rgba(12,12,12,0.8);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 8px; 
+  backdrop-filter: blur(12px);
+}
+
+.nav-links li a {
+  display: block;
+  padding: 10px 22px; 
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-radius: 99px;
+  transition: all 0.25s;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: var(--white);
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-right {
+  justify-self: end;
+}
+
+.nav-cta {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: all 0.25s;
+}
+.nav-cta:hover { color: var(--white); border-color: var(--white); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  background: none; border: none;
+}
+.hamburger span {
+  display: block;
+  width: 26px; height: 1.5px;
+  background: var(--white);
+}
+
+@media (max-width: 1100px) {
+  #navbar { display: flex; justify-content: space-between; }
+  .nav-links-wrapper { display: none; }
+  .nav-right { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* ════════════════════════════════════════
+   2 — HERO
+════════════════════════════════════════ */
+#hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px 80px;
+}
+.hero-h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 7.5vw, 108px);
+  line-height: 1.05; 
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+.hero-h1 .ghost {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.22);
+  color: transparent;
+}
+.hero-sub {
+  font-size: 14px; line-height: 1.7; color: var(--muted);
+  max-width: 440px; margin-inline: auto; margin-bottom: 40px;
+}
+.btn-white {
+  padding: 16px 36px; background: var(--white); color: #000;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; border-radius: 99px; border: none; cursor: pointer;
+}
+
+/* ════════════════════════════════════════
+   3 — BRAND
+════════════════════════════════════════ */
+#brand { padding: 140px 0; background: var(--bg2); border-top: 1px solid var(--border); }
+.brand-quote {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(24px, 3.5vw, 46px);
+  text-align: center; max-width: 850px; margin: 0 auto; line-height: 1.3; font-style: italic; color: rgba(255,255,255,0.8);
+}
+.brand-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 80px;
+  text-align: left;
+}
+.brand-feature h4 {
+  color: var(--green);
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.brand-feature p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════════
+   4 — GUIDE (Diperbarui jadi pas 3 atas 3 bawah)
+════════════════════════════════════════ */
+#guide { padding: 120px 0; }
+.steps-grid {
+  display: grid;
+  /* Membuat spesifik 3 kolom, memastikan tata letak 3 di atas, 3 di bawah */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px; 
+  background: var(--border); 
+  border: 1px solid var(--border); 
+  border-radius: 20px; 
+  overflow: hidden;
+}
+.step-card { background: var(--bg); padding: 50px 40px; }
+.step-num { font-family: 'Syne', sans-serif; font-size: 48px; color: rgba(255,255,255,0.05); font-weight: 800; margin-bottom: 20px; line-height: 1; }
+
+/* Menjaga grid tetap responsif jika layar mengecil */
+@media (max-width: 900px) {
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════
+   5 — PRODUCT (Infinite Horizontal Scroll)
+════════════════════════════════════════ */
+#product { padding: 140px 0; background: var(--bg2); border-top: 1px solid var(--border); }
+.product-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 32px; 
+  margin-top: 60px;
+  padding-bottom: 40px;
+  scrollbar-width: none; /* Firefox */
+}
+.product-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.item-card {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 16px; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  flex: 0 0 clamp(280px, 30vw, 350px);
+  scroll-snap-align: start;
+}
+.item-card:hover { transform: translateY(-12px); border-color: rgba(255,255,255,0.2); }
+.item-img { width: 100%; aspect-ratio: 1/1; border-radius: 16px; object-fit: cover; margin-bottom: 20px; background: #111; }
+.item-info { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 10px 10px; }
+.item-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; }
+.item-price { color: var(--green); font-size: 14px; font-weight: 500; margin-top: 4px; }
+
+/* ════════════════════════════════════════
+   6 — STORE
+════════════════════════════════════════ */
+#store { padding: 140px 0; }
+.store-flex { display: flex; flex-wrap: wrap; gap: 80px; align-items: center; }
+.store-img { flex: 1; min-width: 340px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border); }
+.store-text { flex: 1; min-width: 340px; }
+
+/* ════════════════════════════════════════
+   7 — CONTACT
+════════════════════════════════════════ */
+#contact { padding: 140px 0 60px; border-top: 1px solid var(--border); }
+.contact-top {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--border); margin-bottom: 60px;
+}
+.contact-left h2 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4.5vw, 60px); letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 24px; }
+.contact-email { font-family: 'Syne', sans-serif; font-size: clamp(18px, 2.5vw, 28px); font-weight: 700; border-bottom: 2px solid var(--green); padding-bottom: 4px; display: inline-block; }
+
+.contact-right { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.col-title { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 24px; display: block; }
+.socials-list, .links-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.socials-list li a, .links-list li a { font-size: 14px; color: var(--muted); transition: 0.3s; }
+.socials-list li a:hover, .links-list li a:hover { color: var(--white); }
+
+@media (max-width: 860px) {
+  .contact-top { grid-template-columns: 1fr; gap: 60px; }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed; inset: 0; background: #080808; z-index: 1000;
+  display: none; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--muted); }
+
+</style>
+</head>
+<body>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" onclick="closeMobile()">Menu</a>
+  <a href="#brand" onclick="closeMobile()">Brand</a>
+  <a href="#guide" onclick="closeMobile()">Guide</a>
+  <a href="#product" onclick="closeMobile()">Product</a>
+  <a href="#store" onclick="closeMobile()">Store</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<nav id="navbar">
+  <div class="nav-logo">Ilham.</div>
+  
+  <div class="nav-links-wrapper">
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Menu</a></li>
+      <li><a href="#brand">Brand</a></li>
+      <li><a href="#guide">Guide</a></li>
+      <li><a href="#product">Product</a></li>
+      <li><a href="#store">Store</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Hubungi Kami</a>
+  </div>
+
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section id="hero">
+  <div class="hero-content">
+    <h1 class="hero-h1 reveal">
+      One-click for<br>
+      <span class="ghost">Asset Defense</span>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-1">
+      Keamanan blockchain tingkat tinggi dengan estetika visual premium. Satu klik untuk melindungi masa depan finansial Anda.
+    </p>
+    <div class="reveal reveal-delay-2">
+      <a href="#product"><button class="btn-white">Eksplorasi Produk</button></a>
+    </div>
+  </div>
+</section>
+
+<section id="brand">
+  <div class="container">
+    <p class="label reveal" style="text-align: center; margin-bottom: 30px; color: var(--green);">Our Vision</p>
+    <blockquote class="brand-quote reveal reveal-delay-1">
+      "Standar baru dalam pengalaman digital premium yang memadukan keamanan tak tertembus dengan desain yang memukau."
+    </blockquote>
+    
+    <div class="brand-details reveal reveal-delay-2">
+      <div class="brand-feature">
+        <h4>Tentang Studio</h4>
+        <p>Studio adalah entitas keamanan digital premium yang berfokus pada proteksi aset kriptografi dan data finansial. Kami berdedikasi untuk menciptakan ekosistem di mana keamanan tingkat tinggi dapat diakses secara elegan.</p>
+      </div>
+      <div class="brand-feature">
+        <h4>Keamanan Lapis Baja</h4>
+        <p>Dilengkapi dengan enkripsi militer dan protokol zero-knowledge, sistem kami memastikan bahwa Anda adalah satu-satunya pihak yang memiliki otoritas penuh atas aset Anda tanpa kompromi.</p>
+      </div>
+      <div class="brand-feature">
+        <h4>Desain Visioner</h4>
+        <p>Kami mematahkan stigma bahwa keamanan harus rumit. Antarmuka kami dirancang khusus agar intuitif dan mewah, memanjakan mata sekaligus menghemat waktu berharga Anda setiap harinya.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guide">
+  <div class="container">
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <h3>Eksplorasi</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Pelajari sistem pertahanan aset kami yang dirancang untuk keamanan jangka panjang.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <h3>Aktivasi</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Gunakan protokol keamanan satu klik untuk perlindungan instan terhadap ancaman eksternal.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <h3>Optimasi</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Pantau performa dan keamanan aset Anda secara real-time melalui dashboard eksklusif.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <h3>Integrasi</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Hubungkan dompet digital dan exchange Anda ke dalam satu node perlindungan terpusat.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">05</div>
+        <h3>Pemantauan</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Dapatkan notifikasi pintar dan analitik AI mengenai potensi kerentanan aset Anda.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">06</div>
+        <h3>Skalabilitas</h3>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 15px;">Tingkatkan kapasitas penyimpanan perlindungan Anda seiring dengan bertumbuhnya nilai portofolio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="container">
+    <div style="text-align: center;">
+      <p class="label reveal">The Collection</p>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Syne'; font-size: 48px; margin-top: 10px;">Layanan & Produk</h2>
+      <p class="reveal reveal-delay-2" style="color: var(--muted); font-size: 14px; margin-top: 10px;">(Geser tanpa batas untuk menjelajah)</p>
+    </div>
+    
+    <div class="product-grid reveal reveal-delay-3" id="infGrid">
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Cortex Shield">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Cortex Shield</div>
+            <div class="item-price">IDR 2.499.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Aelf Protocol">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Aelf Protocol</div>
+            <div class="item-price">IDR 5.200.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Quant Vault">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Quant Vault</div>
+            <div class="item-price">IDR 1.850.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Nexus Core">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Nexus Core</div>
+            <div class="item-price">IDR 3.100.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Zenith Node">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Zenith Node</div>
+            <div class="item-price">IDR 4.500.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1614064641913-a530a5000c00?auto=format&fit=crop&q=80&w=600" class="item-img" alt="Cipher Sentries">
+        <div class="item-info">
+          <div>
+            <div class="item-name">Cipher Sentries</div>
+            <div class="item-price">IDR 2.250.000</div>
+          </div>
+          <span style="color: var(--green);">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="store">
+  <div class="container">
+    <div class="store-flex">
+      <div class="store-img reveal">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=900" alt="Studio Store">
+      </div>
+      <div class="store-text">
+        <p class="label reveal" style="margin-bottom: 20px;">Flagship Store</p>
+        <h2 class="reveal reveal-delay-1" style="font-family: 'Syne'; font-size: 48px; margin-bottom: 30px;">Jakarta Headquarter</h2>
+        <p class="reveal reveal-delay-2" style="color: var(--muted); line-height: 1.8; margin-bottom: 30px;">
+          Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan.<br>
+          Buka setiap hari: 10:00 — 21:00
+        </p>
+        <a href="#" class="reveal reveal-delay-3" style="color: var(--green); letter-spacing: 0.2em; font-size: 12px; font-weight: 600;">MAPS DIRECTION →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-top">
+      <div class="contact-left reveal">
+        <h2>Mari<br>Terhubung.</h2>
+        <p style="color: var(--muted); margin: 24px 0 40px; max-width: 360px;">Ada pertanyaan seputar produk kami? Tim kami siap membantu Anda kapan saja.</p>
+        <a href="mailto:hello@studio.co.id" class="contact-email">hello@studio.co.id</a>
+      </div>
+      <div class="contact-right">
+        <div class="reveal reveal-delay-1">
+          <span class="col-title">Media Sosial</span>
+          <ul class="socials-list">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <span class="col-title">Navigasi</span>
+          <ul class="links-list">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#product">Produk</a></li>
+            <li><a href="#store">Toko</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding-top: 30px; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 0.2em;">
+      <p>© 2024 STUDIO INDONESIA. ALL RIGHTS RESERVED.</p>
+      <a href="#hero">BACK TO TOP ↑</a>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ── Navbar scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── Mobile Menu ── */
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+function closeMobile() { mob.classList.remove('open'); }
+
+/* ── Scroll Reveal ── */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+/* ── Active Nav ── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let curr = "";
+  sections.forEach(s => { if (pageYOffset >= s.offsetTop - 150) curr = s.getAttribute("id"); });
+  navLinks.forEach(a => {
+    a.classList.remove("active");
+    if (a.getAttribute("href").includes(curr)) a.classList.add("active");
+  });
+});
+
+/* ── Infinite Horizontal Scroll ── */
+const pGrid = document.getElementById('infGrid');
+
+// Langkah 1: Kloning elemen di dalam grid agar terlihat tak terbatas
+const cloneItems = () => {
+  const items = Array.from(pGrid.children);
+  items.forEach(item => {
+    const clone = item.cloneNode(true);
+    pGrid.appendChild(clone);
+  });
+};
+cloneItems();
+
+// Langkah 2: Logika seamless loop saat di-scroll
+pGrid.addEventListener('scroll', () => {
+  // Karena kita mengkloning isi sekali, batas tengah adalah letak transisi
+  const maxScroll = pGrid.scrollWidth / 2;
+
+  // Jika scroll melewati kloningan di sebelah kanan, lompat instan ke awal
+  if (pGrid.scrollLeft >= maxScroll) {
+    pGrid.style.scrollBehavior = 'auto'; // Matikan snap sejenak untuk melompat mulus
+    pGrid.scrollLeft -= maxScroll; 
+  } 
+  // Jika scroll mentok ke kiri dari awal, lompat instan ke tengah (awal kloningan)
+  else if (pGrid.scrollLeft === 0) {
+    pGrid.style.scrollBehavior = 'auto';
+    pGrid.scrollLeft += maxScroll;
+  }
+});
+</script>
+</body>
+</html>
