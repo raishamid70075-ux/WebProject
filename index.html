@@ -97,6 +97,17 @@ a  { text-decoration: none; color: inherit; }
   font-size: 22px; 
   letter-spacing: -0.04em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: -10px;
+}
+
+.nav-logo img {
+  height: 86px;
+  width: auto;
+  object-fit: contain;
+  margin-left: 25px;
 }
 
 .nav-links-wrapper {
@@ -329,7 +340,10 @@ a  { text-decoration: none; color: inherit; }
 </div>
 
 <nav id="navbar">
-  <div class="nav-logo">Ilham.</div>
+  <div class="nav-logo">
+    <img src="https://myasset-nine.vercel.app/asset/foto1.png" alt="Logo">
+    <span style="margin-left: -10px;">Ilham.</span>
+  </div>
   
   <div class="nav-links-wrapper">
     <ul class="nav-links">
